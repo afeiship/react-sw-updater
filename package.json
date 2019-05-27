@@ -8,7 +8,7 @@
     "email": "1290657123@qq.com"
   },
   "scripts": {
-    "dev": "webpack-dev-server --open --mode development",
+    "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
