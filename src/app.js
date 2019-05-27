@@ -29,7 +29,9 @@ export default class extends React.Component {
     value: initialState
   };
 
-  _onChange = ({ value }) => {
+  _onChange = (inEvent) => {
+    const { value } = inEvent;
+    console.log('value:->', value);
     this.setState({ value });
   };
 
