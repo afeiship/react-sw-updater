@@ -32,6 +32,7 @@ export default class extends React.Component {
   _onChange = (inEvent) => {
     const { value } = inEvent;
     console.log('value:->', value);
+    console.log(value.toJSON());
     this.setState({ value });
   };
 
