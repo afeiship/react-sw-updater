@@ -29,6 +29,15 @@ export default class extends React.Component {
     value: initialState
   };
 
+  constructor(inProps){
+    super(inProps);
+    this.editor = React.createRef();
+  }
+
+  componentDidMount() {
+    window.editor = this.editor.current;
+  }
+
   _onChange = (inEvent) => {
     const { value } = inEvent;
     console.log('value:->', value);
@@ -40,7 +49,7 @@ export default class extends React.Component {
     const { value } = this.state;
     return (
       <div>
-        <Editor value={value} onChange={this._onChange} />
+        <Editor ref={this.editor} value={value} onChange={this._onChange} />
       </div>
     );
   }
