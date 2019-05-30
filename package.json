@@ -35,6 +35,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "slate": "^0.47.3",
+    "slate-plain-serializer": "^0.7.5",
     "slate-react": "^0.22.3"
   }
 }

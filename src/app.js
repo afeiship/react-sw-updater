@@ -1,10 +1,16 @@
 import React from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
+import Plain from 'slate-plain-serializer'
 import data from './assets/value';
 
 // 构建初始状态…
 const initialState = Value.fromJSON(data);
+const intialPlainData =  Plain.deserialize('Hello, fei!');
+
+console.log(intialPlainData);
+
+
 
 function CodeNode(inProps) {
   const { attributes, children } = inProps;
@@ -24,7 +30,7 @@ function BoldMark(inProps) {
 
 export default class extends React.Component {
   state = {
-    value: initialState
+    value: intialPlainData
   };
 
   constructor(inProps) {
