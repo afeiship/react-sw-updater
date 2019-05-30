@@ -8,10 +8,6 @@ import data from './assets/value';
 const initialState = Value.fromJSON(data);
 const intialPlainData =  Plain.deserialize('Hello, fei!');
 
-console.log(intialPlainData);
-
-
-
 function CodeNode(inProps) {
   const { attributes, children } = inProps;
   return (
