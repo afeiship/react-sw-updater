@@ -9,7 +9,6 @@ function Button(inProps) {
   const { children, attributes, onMouseDown } = inProps;
   return (
     <button {...attributes} onMouseDown={onMouseDown}>
-      {' '}
       {children}
     </button>
   );
