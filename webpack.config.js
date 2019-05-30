@@ -23,6 +23,7 @@ module.exports = {
   devServer: {
     open: false
   },
+  devtool:'source-map',
   plugins: [
     new HtmlWebPackPlugin({
       template: './public/index.html',

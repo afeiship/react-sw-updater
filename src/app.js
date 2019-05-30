@@ -15,6 +15,13 @@ function CodeNode(inProps) {
   );
 }
 
+function BoldMark(inProps) {
+  const { children } = inProps;
+  console.log('bold children', children);
+
+  return <strong>{children}</strong>;
+}
+
 export default class extends React.Component {
   state = {
     value: initialState
@@ -33,13 +40,10 @@ export default class extends React.Component {
   };
 
   _onKeyDown = (inEvent, inEditor, inNext) => {
+    console.log('current:->', inEditor.value.blocks);
     if (inEvent.ctrlKey && inEvent.key === '`') {
       inEvent.preventDefault();
-      const isCode = inEditor.value.blocks.some(
-        (block) => block.type == 'code'
-      );
-      // toggle logic:
-      return inEditor.setBlocks(isCode ? 'paragraph' : 'code');
+      return inEditor.toggleMark('bold');
     }
     return inNext();
   };
@@ -53,6 +57,21 @@ export default class extends React.Component {
     }
   };
 
+  _onRenderMark = (inProps, inEditor, inNext) => {
+    console.log('mark!', inProps);
+    console.log(inProps.mark.type);
+
+
+    switch (inProps.mark.type) {
+      case 'bold':
+        console.log('case bold!');
+
+        return <BoldMark {...inProps} />;
+      default:
+        return inNext();
+    }
+  };
+
   render() {
     const { value } = this.state;
     return (
@@ -60,6 +79,7 @@ export default class extends React.Component {
         <Editor
           ref={this.editor}
           value={value}
+          renderMark={this._onRenderMark}
           renderBlock={this._onRenderBlock}
           onChange={this._onChange}
           onKeyDown={this._onKeyDown}
