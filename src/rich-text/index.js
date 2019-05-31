@@ -1,6 +1,5 @@
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-
 import React from 'react';
 import initialValue from './value.json';
 import { isKeyHotkey } from 'is-hotkey';
@@ -92,6 +91,7 @@ class RichTextExample extends React.Component {
 
   ref = (editor) => {
     this.editor = editor;
+    window.editor = editor;
   };
 
   /**
@@ -261,6 +261,19 @@ class RichTextExample extends React.Component {
       mark = 'underlined';
     } else if (isCodeHotkey(event)) {
       mark = 'code';
+    } else if (!event.shiftKey && event.key === 'Tab') {
+      // 添加一个 tab 缩进的功能
+      event.preventDefault();
+      const firstBlock = editor.value.startBlock;
+      if (firstBlock.type === 'list-item') {
+        return editor.setBlocks('list-item').wrapBlock('numbered-list');
+      }
+      return;
+    } else if (event.shiftKey && event.key === 'Tab') {
+      // 添加一个 tab 缩进的功能
+      console.log('shift key ');
+      event.preventDefault();
+      return ;
     } else {
       return next();
     }
@@ -330,6 +343,8 @@ class RichTextExample extends React.Component {
           )
           .wrapBlock(type);
       } else {
+        // set the currently selected blocks type to "code".
+        //  editor.setBlocks('code');
         editor.setBlocks('list-item').wrapBlock(type);
       }
     }
