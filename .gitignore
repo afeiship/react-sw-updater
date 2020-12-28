@@ -6,5 +6,11 @@ yarn.lock
 package-lock.json
 .DS_Store
 .idea
+
+
+# vscode
 .vscode
-dist
+.history
+
+# python cache
+__pycache__
