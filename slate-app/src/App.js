@@ -1,27 +1,82 @@
 import './App.css';
 // Import React dependencies.
-import React, { useMemo, useCallback, useState } from 'react'
+import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react'
 // Import the Slate editor factory.
-import { createEditor, Transforms, Editor } from 'slate'
+import { createEditor, Transforms, Editor, Text } from 'slate'
+import * as slate from 'slate';
 
 // Import the Slate components and React plugin.
 import { Slate, Editable, withReact } from 'slate-react'
 
+import "@jswork/next-sample"
+
 const DefaultElement = props => {
-  return <p {...props.attributes}>{props.children}</p>
+  return <div {...props.attributes}>{props.children}</div>
 }
 
-const CodeElement = props => {
+
+const ImageElement = ({ attributes, children, element }) => {
   return (
-    <pre {...props.attributes}>
-      <code>{props.children}</code>
-    </pre>
+    <span {...attributes}>
+      <img style={{ userSelect: "none" }}
+        contentEditable={false} src="https://himg.bdimg.com/sys/portrait/item/be10475f686d6c73db00.jpg" />
+      {children}
+    </span>
   )
 }
 
+const LatexElement = ({ attributes, children, element }) => {
+  const dom = useRef(null);
+  const latexes = [
+    String.raw`c = \pm\sqrt{a^2 + b^2}`,
+    String.raw`\ce{2H2 + O2 ->T[燃烧] 2H2O}`
+  ]
+
+  useEffect(() => {
+    katex.render( nx.sample(latexes), dom.current, {
+      throwOnError: false
+    });
+  }, [])
+  return (
+    <span {...attributes}>
+      <span style={{ userSelect: "none" }}
+        contentEditable={false}
+        className="is-latex" ref={dom}>LAtex</span>
+      { children}
+    </span>
+  )
+}
+
+
+const withImage = editor => {
+  const { isInline, isVoid } = editor
+  editor.isInline = element => {
+    return element.type === 'image' ? true : isInline(element)
+  };
+  editor.isVoid = element => {
+    return element.type === 'image' ? true : isVoid(element)
+  };
+  return editor
+}
+
+
+const withLatex = editor => {
+  const { isInline, isVoid } = editor
+  editor.isInline = element => {
+    return element.type === 'latex' ? true : isInline(element)
+  };
+  editor.isVoid = element => {
+    return element.type === 'latex' ? true : isVoid(element)
+  };
+  return editor
+}
+
+
+
 const App = () => {
-  const editor = useMemo(() => withReact(createEditor()), [])
+  const editor = useMemo(() => withImage(withLatex(withReact(createEditor()))), [])
   // Add the initial value when setting up our state.
+
   const [value, setValue] = useState([
     {
       type: 'paragraph',
@@ -29,48 +84,44 @@ const App = () => {
     },
   ])
 
-  const renderElement = useCallback(props => {
+  const renderElement = (props) => {
     switch (props.element.type) {
-      case 'code':
-        return <CodeElement {...props} />
+      case 'latex':
+        return <LatexElement {...props} />
+      case 'image':
+        return <ImageElement {...props} />
       default:
         return <DefaultElement {...props} />
     }
-  }, [])
+  }
 
+  const insertLatex = () => {
+    const text = { text: '' }
+    const voidNode = { type: 'latex', children: [text] }
+    Transforms.insertNodes(editor, voidNode)
+  }
+
+  const insertImage = () => {
+    const text = { text: '' }
+    const voidNode = { type: 'image', children: [text] }
+    Transforms.insertNodes(editor, voidNode)
+  }
 
   return (
-    <Slate
-      editor={editor}
-      value={value}
-      onChange={newValue => {
-        console.log('new value:', newValue);
-        return setValue(newValue)
-      }}
-    >
-      <Editable
-        renderElement={renderElement}
-        onKeyDown={event => {
-          console.log(event.key);
-          if (event.key === '&') {
-            // Prevent the ampersand character from being inserted.
-            event.preventDefault()
-            // Execute the `insertText` method when the event occurs.
-            editor.insertText('and')
-          }
-
-          if (event.key === '`' && event.ctrlKey) {
-            // Prevent the "`" from being inserted by default.
-            event.preventDefault()
-            // Otherwise, set the currently selected blocks type to "code".
-            Transforms.setNodes(
-              editor,
-              { type: 'code' },
-              { match: n => Editor.isBlock(editor, n) }
-            )
-          }
-        }} />
-    </Slate>
+    <div className="editor-container">
+      <nav className="editor-container__toolbar">
+        <button onClick={insertLatex}>Insert math latex</button>
+        <button onClick={insertImage}>Insert image</button>
+      </nav>
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={setValue}
+      >
+        <Editable
+          renderElement={renderElement} />
+      </Slate>
+    </div>
   )
 }
 
