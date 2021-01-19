@@ -1,15 +1,19 @@
 import { useRef, useEffect } from 'react';
 
-export default (props) => {
+export default ({ attributes, children, element }) => {
   const rootRef = useRef(null);
-  const { latex, onChange } = props;
 
   useEffect(() => {
-    katex.render(String.raw`${latex}`, rootRef.current, {
+    katex.render(element.latex, rootRef.current, {
       throwOnError: false
     });
-    onChange && onChange(latex);
-  }, [latex])
+    // onChange && onChange(latex);
+  }, [element.latex]);
 
-  return <span className="is-latex" ref={rootRef} />
-}
+  return (
+    <span {...attributes}>
+      <span contentEditable={false} className="is-latex" ref={rootRef} />
+      { children}
+    </span>
+  );
+};

@@ -2,6 +2,7 @@
 .editor-container{
   border:1px solid #f60;
   padding: 10px;
+  margin-bottom: 20px;
 }
 
 .is-latex{
@@ -10,6 +11,9 @@
   cursor: pointer;
 }
 
+.is-latex:focus{
+    border:2px solid lightblue;
+  }
 
 .is-toolbar{
   background:#eee;
