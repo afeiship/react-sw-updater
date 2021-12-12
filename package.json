@@ -8,5 +8,8 @@
     "name": "afeiship",
     "email": "1290657123@qq.com"
   },
+  "scripts": {
+    "dev": "cd boilerplate-slate && npm run dev"
+  },
   "license": "MIT"
 }
