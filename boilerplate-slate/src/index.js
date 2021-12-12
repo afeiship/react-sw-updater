@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom';
 import React, { useMemo, useState } from 'react';
-import { Editor, Transforms, createEditor } from 'slate';
+import { Text, Editor, Transforms, createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { DefaultElement, CodeElement } from './elements';
+import { renderLeaf } from './leafs';
 
 const App = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -39,8 +40,8 @@ const App = () => {
     >
       <Editable
         renderElement={renderElement}
+        renderLeaf={renderLeaf}
         onKeyDown={event => {
-          console.log('keydown: ', event);
           if (event.key === '`' && event.ctrlKey) {
             // Prevent the "`" from being inserted by default.
             event.preventDefault();
@@ -49,12 +50,22 @@ const App = () => {
             const [match] = Editor.nodes(editor, {
               match: n => n.type === 'code'
             });
-            console.log('match:', );
+            console.log('match:');
             // Toggle the block type depending on whether there's already a match.
             Transforms.setNodes(
               editor,
-              { type: match ? 'paragraph' : 'code' },
+              { type: match ? 'paragraph' : 'code' }
               // { match: n => Editor.isBlock(editor, n) }
+            );
+          }
+
+          if (event.key === 'b' && event.ctrlKey) {
+            console.log('bold');
+            event.preventDefault();
+            Transforms.setNodes(
+              editor,
+              { bold: true },
+              { match: n => Text.isText(n), split: true }
             );
           }
         }}
