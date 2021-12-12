@@ -12,14 +12,33 @@ const App = () => {
     }
   ]);
 
+  const DefaultElement = (props) => {
+    return <p className='i-am-p' {...props.attributes}>{props.children}</p>;
+  };
+
+// Define a rendering function based on the element passed to `props`. We use
+// `useCallback` here to memoize the function for subsequent renders.
+  const renderElement = (props) => {
+    switch (props.element.type) {
+      default:
+        return <DefaultElement {...props} />;
+    }
+  };
+
+  window.editor = editor;
+
   return (
     // Add the editable component inside the context.
     <Slate
       editor={editor}
       value={value}
-      onChange={newValue => setValue(newValue)}
+      onChange={newValue => {
+        console.log('new value:', newValue);
+        setValue(newValue);
+      }}
     >
       <Editable
+        renderElement={renderElement}
         onKeyDown={event => {
           console.log('keydown: ', event);
           if (event.key === '&') {
