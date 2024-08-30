@@ -55,14 +55,15 @@ export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps>
     const { onChange } = this.props;
     const ok = this.updateServiceWorker;
     const cancel = () => this.setNeedRefresh(false);
-    this.setState({ needRefresh }, () => {
+    this.setState({ needRefresh });
+    if (needRefresh) {
       onChange?.({
         hasUpdate: needRefresh,
         execute: (confirmed) => (confirmed ? ok() : cancel()),
         ok,
         cancel,
       });
-    });
+    }
   };
 
   render() {
