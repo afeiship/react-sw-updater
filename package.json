@@ -1,15 +1,20 @@
 {
-  "name": "@jswork/slate-notes",
-  "private": true,
+  "name": "react-sw-updater",
   "version": "1.0.0",
-  "description": "Notes for slatejs.",
-  "homepage": "https://github.com/afeiship/slate-notes",
-  "author": {
-    "name": "afeiship",
-    "email": "1290657123@qq.com"
-  },
+  "description": "A react pwa updater based on sw-runtime.",
+  "homepage": "https://js.work",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "cd boilerplate-slate && npm run dev"
-  },
-  "license": "MIT"
+    "dev": "cd packages/example && yarn run dev",
+    "predocs": "rm -rf docs && node scripts/markdown.js",
+    "docs": "cd packages/example && yarn run build",
+    "postdocs": "cp -R packages/example/dist docs",
+    "preln:build": "yarn run docs",
+    "ln:build": "cd packages/lib && yarn run build",
+    "ln:publish": "cd packages/lib && yarn run release"
+  }
 }
