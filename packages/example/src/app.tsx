@@ -7,9 +7,12 @@ function App() {
       <div className="badge badge-warning absolute right-0 top-0 m-4">
         Build Time: {BUILD_TIME}
       </div>
-      <ReactSwUpdater className="debug-red">
-        abc
-      </ReactSwUpdater>
+      <ReactSwUpdater
+        onChange={({ execute }) => {
+          const confirmed = confirm('New version available, do you want to update?');
+          execute(confirmed);
+        }}
+      />
     </div>
   );
 }
