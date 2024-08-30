@@ -19,7 +19,7 @@ nx.declare({
 
       nx.replaceInFile('README.md', [
         ['__GENERATE_DAPP__', indentString(docApp, 2).trimEnd()],
-        ['@jswork/react-sw-updater/src', '@jswork/react-sw-updater'],
+        ['@jswork/react-sw-updater/src/main', '@jswork/react-sw-updater'],
         ['src/style.scss', 'dist/style.scss'],
       ]);
     },
