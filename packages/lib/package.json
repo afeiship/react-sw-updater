@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-sw-updater",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
@@ -39,5 +39,10 @@
   },
   "dependencies": {
     "@jswork/sw-runtime": "^1.0.12"
-  }
+  },
+  "keywords": [
+    "slate",
+    "notes",
+    "deprecated"
+  ]
 }
