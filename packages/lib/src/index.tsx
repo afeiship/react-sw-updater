@@ -31,6 +31,7 @@ export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps>
   componentDidMount() {
     const { disabled, interval, mute } = this.props;
     this.swInstance = SwRuntime.install({
+      swDest: '/sw.js',
       autoUpdate: true,
       disabled,
       autoUpdateInterval: interval,
