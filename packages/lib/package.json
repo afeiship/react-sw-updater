@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-sw-updater",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
@@ -41,8 +41,13 @@
     "@jswork/sw-runtime": "^1.0.12"
   },
   "keywords": [
-    "slate",
-    "notes",
-    "deprecated"
+    "checker",
+    "component",
+    "pwa",
+    "rc",
+    "react",
+    "service-worker",
+    "sw",
+    "updater"
   ]
 }
