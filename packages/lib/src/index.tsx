@@ -8,11 +8,12 @@ export type UpdateEventOptions = {
   cancel: () => void;
 };
 
-type ReactSwUpdaterProps = {
+export type ReactSwUpdaterProps = {
   disabled?: boolean;
   interval?: number;
   mute?: boolean;
   onChange?: (event: UpdateEventOptions) => void;
+  swRuntimeOptions?: any;
 };
 
 export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps> {
@@ -29,7 +30,7 @@ export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps>
   private swInstance: any;
 
   componentDidMount() {
-    const { disabled, interval, mute } = this.props;
+    const { disabled, interval, mute, swRuntimeOptions } = this.props;
     this.swInstance = SwRuntime.install({
       swDest: '/sw.js',
       autoUpdate: true,
@@ -42,6 +43,7 @@ export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps>
       onUpdateReady: () => {
         this.setNeedRefresh(true);
       },
+      ...swRuntimeOptions,
     });
   }
 
