@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-sw-updater",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
@@ -48,6 +48,8 @@
     "react",
     "service-worker",
     "sw",
-    "updater"
+    "updater",
+    "runtime",
+    "sw-runtime"
   ]
 }
