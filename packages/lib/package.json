@@ -38,7 +38,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@jswork/sw-runtime": "^1.0.12"
+    "@jswork/sw-runtime": "^1.0.13"
   },
   "keywords": [
     "checker",
