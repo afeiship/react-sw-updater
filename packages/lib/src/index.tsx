@@ -6,6 +6,7 @@ export type UpdateEventOptions = {
   execute: (isConfirmed: boolean) => void;
   ok: () => void;
   cancel: () => void;
+  update: () => Promise<void>;
 };
 
 export type ReactSwUpdaterProps = {
@@ -65,6 +66,7 @@ export default class ReactSwUpdater extends React.Component<ReactSwUpdaterProps>
         execute: (confirmed) => (confirmed ? ok() : cancel()),
         ok,
         cancel,
+        update: () => this.swInstance.applyUpdate(),
       });
     }
   };
